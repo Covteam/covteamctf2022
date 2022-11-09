@@ -1,0 +1,8 @@
+version: '2'
+services:
+    pwn2:
+        image: web1
+        build: .
+        container_name: web1
+        ports:
+          - 4000:80

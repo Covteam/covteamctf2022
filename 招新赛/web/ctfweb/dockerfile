@@ -1,0 +1,7 @@
+from php:7.0-apache
+expose 80
+copy www/* /var/www/html/
+copy start.sh /start.sh
+run chmod 777 /var/www/html/* -R
+run chmod 777 /start.sh
+#cmd ["/start.sh"]

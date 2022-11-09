@@ -1,0 +1,8 @@
+version: '2'
+services:
+    see:
+        image: see
+        build: ./docker/
+        container_name: see
+        ports:
+            - 8000:9999
